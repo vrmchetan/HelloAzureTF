@@ -1,14 +1,10 @@
-variable "prefix" {
-  default = "string"
-}
-
 resource "azurerm_resource_group" "example" {
-  name     = "${var.prefix}-resources"
+  name     = "terra-resource"
   location = "West Europe"
 }
 
 resource "azurerm_virtual_network" "main" {
-  name                = "${var.prefix}-network"
+  name                = "terra-network"
   address_space       = ["10.0.0.0/16"]
   location            = azurerm_resource_group.example.location
   resource_group_name = azurerm_resource_group.example.name
@@ -22,7 +18,7 @@ resource "azurerm_subnet" "internal" {
 }
 
 resource "azurerm_network_interface" "main" {
-  name                = "${var.prefix}-nic"
+  name                = "terra-interface-nic"
   location            = azurerm_resource_group.example.location
   resource_group_name = azurerm_resource_group.example.name
 
@@ -34,7 +30,7 @@ resource "azurerm_network_interface" "main" {
 }
 
 resource "azurerm_virtual_machine" "main" {
-  name                  = "${var.prefix}-vm"
+  name                  = "terra-vm"
   location              = azurerm_resource_group.example.location
   resource_group_name   = azurerm_resource_group.example.name
   network_interface_ids = [azurerm_network_interface.main.id]
