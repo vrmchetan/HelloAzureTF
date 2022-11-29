@@ -3,4 +3,9 @@ resource "azurerm_resource_group" "resourcegroups" {
     location    = var.Location
 }
 
-
+resource "azurerm_virtual_machine" "main" {
+  name                  = "terra-vm"
+  location              = var.Location
+  resource_group_name   = var.ResourceGroup
+  network_interface_ids = [azurerm_network_interface.main.id]
+  vm_size               = "Standard_DS1_v2"
