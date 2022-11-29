@@ -1,52 +1,81 @@
-# This is a basic workflow to help you get started with Actions
 
-name: rg-connectivity-001
+name: 'tf deploy to azure pawan microsoft account'
 
-# Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the main branch
   push:
     branches:
     - main
-    paths:
-      - 'Subscriptions/Sub-MVP-Sponsorship/rg-connectivity-001/*.tf'
-
+  pull_request:
   workflow_dispatch:
-
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
-jobs:
-  # This workflow contains a single job called "build"
-  resourcegroups:
-    # The type of runner that the job will run on
-    runs-on: ubuntu-latest
     
-    name: 'rg-connectivity-001'
-    env:
-      ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
-      ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
-      ARM_SUBSCRIPTION_ID: ${{ secrets.MVP_SUBSCRIPTION }}
-      ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
-      
-    # Steps represent a sequence of tasks that will be executed as part of the job
+
+env:
+  ARM_CLIENT_ID: ${{secrets.AZURE_CLIENT_ID}}
+  ARM_CLIENT_SECRET: ${{secrets.AZURE_CLIENT_SECRET}}
+  ARM_SUBSCRIPTION_ID: ${{secrets.AZURE_SUBSCRIPTION_ID}}
+  ARM_TENANT_ID: ${{secrets.AZURE_TENANT_ID}}
+#  ROOT_PATH: '${{ github.workspace }}*/**'
+
+
+jobs:
+  terraform_plan:
+    name: 'Terraform plan'
+    runs-on: ubuntu-latest
+   
+    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+    defaults:
+      run:
+        shell: bash
+
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v3
+    # Checkout the repository to the GitHub Actions runner
+    - name: Checkout
+      uses: actions/checkout@v2
 
-      # Runs a single command using the runners shell
-      - name: 'Terraform init'
-        id: init
-        run: |
-          cd Subscriptions/Sub-MVP-Sponsorship/rg-connectivity-001
-          terraform init          
+    # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v1
+      with:
+        cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
 
-      - name: 'Terraform plan'
-        id: plan
-        run: |
-          cd Subscriptions/Sub-MVP-Sponsorship/rg-connectivity-001
-          terraform plan
-                    
-      - name: 'Terraform apply'
-        id: apply
-        run: |
-          cd Subscriptions/Sub-MVP-Sponsorship/rg-connectivity-001
-          terraform apply -auto-approve 
+    # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
+    - name: Terraform Init
+      run: terraform init
+#    working-directory: ${{env.ROOT_PATH}}
+   
+    # Generates an execution plan for Terraform
+    - name: Terraform Plan
+      run: terraform plan
+ #     working-directory: ${{env.ROOT_PATH}}
+
+  terraform_apply:
+    name: 'Terraform apply'
+    runs-on: ubuntu-latest
+    needs: [terraform_plan]
+    environment: dev
+    
+    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+    # Checkout the repository to the GitHub Actions runner
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v1
+      with:
+        cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+
+    # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
+    - name: Terraform Init
+      run: terraform init
+   #   working-directory: ${{env.ROOT_PATH}}
+   
+    # Generates an execution plan for Terraform
+    - name: Terraform apply
+      run: terraform apply --auto-approve
+  #    working-directory: ${{env.ROOT_PATH}}
