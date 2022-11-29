@@ -4,12 +4,10 @@ name: rg-connectivity-001
 
 # Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the main branch
   push:
-    paths:
-      - 'Subscriptions/Sub-MVP-Sponsorship/rg-connectivity-001/*.tf'
-
-  # Allows you to run this workflow manually from the Actions tab
+    branches:
+    - main
+  pull_request:
   workflow_dispatch:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
