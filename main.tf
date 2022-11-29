@@ -1,5 +1,5 @@
 variable "prefix" {
-  default = "tfvmex"
+  default = "string"
 }
 
 resource "azurerm_resource_group" "example" {
