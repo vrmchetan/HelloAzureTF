@@ -9,7 +9,7 @@ resource "azurerm_container_registry" "acr" {
   sku                 = "Premium"
   admin_enabled       = false
   georeplications {
-    location                = var.Location
+    location                = "North Europe"
     zone_redundancy_enabled = true
     tags                    = {}
   }
