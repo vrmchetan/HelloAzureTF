@@ -15,6 +15,6 @@ resource "azurerm_log_analytics_workspace" "law" {
   location            = var.Location
   sku                 = "PerGB2018"
   retention_in_days   = 90
-  tags                = local.tags
+  tags                = terra
 }
 
