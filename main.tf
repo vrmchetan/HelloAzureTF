@@ -17,4 +17,4 @@ resource "azurerm_log_analytics_workspace" "law" {
   retention_in_days   = 90
   tags                = local.tags
 }
-H
+
