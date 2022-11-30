@@ -9,4 +9,12 @@ resource "azurerm_container_registry" "acr" {
   sku                 = "Basic"
   admin_enabled       = false
 }
-
+resource "azurerm_log_analytics_workspace" "law" {
+  name                = "law-aca-terraform"
+  resource_group_name = var.ResourceGroup
+  location            = var.Location
+  sku                 = "PerGB2018"
+  retention_in_days   = 90
+  tags                = local.tags
+}
+H
