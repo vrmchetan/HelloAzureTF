@@ -6,13 +6,7 @@ resource "azurerm_container_registry" "acr" {
   name                = "appinventivkumar"
   resource_group_name = var.ResourceGroup
   location            = var.Location
-  sku                 = "Premium"
+  sku                 = "Basic"
   admin_enabled       = false
-  georeplications {
-    location                = "North Europe"
-    zone_redundancy_enabled = true
-    tags                    = {}
-  }
-  
 }
 
