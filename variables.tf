@@ -5,5 +5,5 @@ variable "Location" {
 
 variable "ResourceGroup" {
     type        = string
-    default     = "rg-loganalytics-001"   
+    default     = "terra-resource-007"   
 }
