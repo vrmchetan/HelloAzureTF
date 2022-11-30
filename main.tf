@@ -6,7 +6,7 @@ resource "azurerm_container_registry" "acr" {
   name                = "containerRegistry1"
   resource_group_name = var.ResourceGroup
   location            = var.Location
-  sku                 = "Basic"
+  sku                 = "Premium"
   admin_enabled       = false
   georeplications {
     location                = "North Europe"
