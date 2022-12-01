@@ -1,4 +1,4 @@
-resource "azurerm_resource_group" "resourcegroups" {
+resource "azurerm_resource_group" "Resourcegroups12345" {
     name        = var.ResourceGroup
     location    = var.Location
 }
