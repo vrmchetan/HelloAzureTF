@@ -48,7 +48,7 @@ resource "azapi_resource"  "aca" {
 
     body = jsonencode({
         properties : {
-            managedEnvironmentId  = azapi_resource.aca.env.id
+            managedEnvironmentId  = azapi_resource.aca_env.id
             configuration = {
                 ingress = {
                     external  = true
