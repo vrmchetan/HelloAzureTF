@@ -47,10 +47,10 @@ resource "azapi_resource"  "aca" {
     name       = "terraform-app007"
 
     body = jsonencode({
-        properties ; {
+        properties : {
             managedEnvironmentId  = azapi_resource.aca.env.id
             configuration = {
-                ingress ={
+                ingress = {
                     external  = true
                     targetPort = 80
                 }
