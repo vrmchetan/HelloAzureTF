@@ -11,8 +11,8 @@ resource "azurerm_container_registry" "acr" {
 }
 resource "azurerm_log_analytics_workspace" "law" {
   name                = "aca-env-terraform"
-  resource_group_name = var.ResourceGroup
-  location            = var.Location
+  resource_group_name = azurerm_resource_group.resourcegroups.name
+  location            = azurerm_resource_group.resourcegroups.location
   sku                 = "PerGB2018"
   retention_in_days   = 90 
 }
