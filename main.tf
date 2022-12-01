@@ -4,8 +4,8 @@ resource "azurerm_resource_group" "resourcegroups" {
 }
 resource "azurerm_container_registry" "acr" {
   name                = "appinventivkumar"
-  resource_group_name = var.ResourceGroup
-  location            = var.Location
+  resource_group_name = azurerm_resource_group.resourcegroups.name
+  location            = azurerm_resource_group.resourcegroups.location
   sku                 = "Basic"
   admin_enabled       = false
 }
@@ -43,7 +43,7 @@ resource "azapi_resource" "aca_env" {
 resource "azapi_resource"  "aca" {
     type       = "Microsoft.App/containerApp@2022-03-01"
     parent_id  = azurerm_resource_group.resourcegroups.id
-    location   = var.Location
+    location   = azurerm_resource_group.resourcegroups.location
     name       = "terraform-app007"
 
     body = jsonencode({
