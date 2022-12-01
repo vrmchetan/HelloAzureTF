@@ -16,3 +16,63 @@ resource "azurerm_log_analytics_workspace" "law" {
   sku                 = "PerGB2018"
   retention_in_days   = 90 
 }
+# creating aca environment
+resource "azapi_resource" "aca_env" {
+     type       = "Microsoft.App/managedEnvironments@2022-03-01"
+     parent_id  = var.ResourceGroup.rg.id
+     location = var.Location
+     name = "aca-env-terraform"
+     
+     body = jsonencode({
+        properties = {
+            appLogsConfiguration = {
+                destination = "log-analytics"
+                logAnalyticsConfiguration = {
+                    customerId = azurerm_log_analytics_workspace.law.workspace_id 
+                    sharedKey  = azurerm_log_analytics_workspace.law.primary_shared_key
+                }
+            }
+        }
+
+    })
+
+}
+
+
+#creating the aca
+resource "azapi_resource"  "aca" {
+    type       = "Microsoft.App/containerApp@2022-03-01"
+    parent_id  = var.ResourceGroup.rg.id
+    location   = var.Location
+    name       = "terraform-app007"
+
+    body = jsonencode({
+        properties ; {
+            managedEnvironmentId  = azapi_resource.aca.env.id
+            configuration = {
+                ingress ={
+                    external  = true
+                    targetPort = 80
+                }
+            }
+        }
+        template = {
+            containers = [
+                {
+                    name = "web"
+                    image = "ngnix"
+                    resource = {
+                        cpu = 0.5
+                        memory = "1.0Gi "
+                    }
+                }
+            ]
+            scale = {
+                minReplicas = 2
+                maxReplicas = 20
+            }
+        }
+    })
+    }
+}
+
