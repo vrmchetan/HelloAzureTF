@@ -19,7 +19,7 @@ resource "azurerm_log_analytics_workspace" "law" {
 # creating aca environment
 resource "azapi_resource" "aca_env" {
      type       = "Microsoft.App/managedEnvironments@2022-03-01"
-     parent_id  = azurerm_resource_group.rg.id
+     parent_id  = azurerm_resource_group.resourcegroups.id
      location = var.Location
      name = "aca-env-terraform"
      
@@ -42,7 +42,7 @@ resource "azapi_resource" "aca_env" {
 #creating the aca
 resource "azapi_resource"  "aca" {
     type       = "Microsoft.App/containerApp@2022-03-01"
-    parent_id  = azurerm_resource_group.rg.id
+    parent_id  = azurerm_resource_group.resourcegroups.id
     location   = var.Location
     name       = "terraform-app007"
 
