@@ -5,6 +5,6 @@ variable "Location" {
 
 variable "ResourceGroup" {
     type        = string
-    default     = "resourcegroups"   
+    default     = "Resourcegroups12345"   
 }
 
