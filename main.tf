@@ -73,6 +73,5 @@ resource "azapi_resource"  "aca" {
             }
         }
     })
-    }
-}
+ }
 
