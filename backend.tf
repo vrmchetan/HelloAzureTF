@@ -9,8 +9,9 @@ terraform {
 }
 provider "azurerm" {
   features {}
-}
-azapi = {
+  azapi = {
     source  = "Azure/azapi"
+    }
 }
+
       
