@@ -5,6 +5,6 @@ variable "Location" {
 
 variable "ResourceGroup" {
     type        = string
-    default     = "terra-resource-007"   
+    default     = "resourcegroups"   
 }
 
