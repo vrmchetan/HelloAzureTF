@@ -59,5 +59,5 @@ resource "azapi_resource" "container_app" {
     }
   
 }
-
+}
 
