@@ -22,6 +22,7 @@ resource "azapi_resource" "aca_env" {
      parent_id  = azurerm_resource_group.resourcegroups.id
      location = var.Location
      name = "aca-env-terraform"
+     schema_validation_enabled = false
      
      body = jsonencode({
         properties = {
