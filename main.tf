@@ -3,7 +3,7 @@ resource "azurerm_resource_group" "resourcegroups" {
     location    = var.Location
 }
 resource "azurerm_container_registry" "acr" {
-  name                = "appinventivsingh"
+  name                = "a1"
   resource_group_name = azurerm_resource_group.resourcegroups.name
   location            = azurerm_resource_group.resourcegroups.location
   sku                 = "Basic"
