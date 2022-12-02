@@ -41,7 +41,7 @@ resource "azapi_resource" "aca_env" {
 
 #creating the aca
 resource "azapi_resource" "aca" {
-    type       = "Microsoft.App/ContainerApps@2022-03-01"
+    type       = "Microsoft.App/containerApps@2022-03-01"
     parent_id  = azurerm_resource_group.resourcegroups.id
     location   = azurerm_resource_group.resourcegroups.location
     name       = "aca-test-environments"
@@ -56,16 +56,16 @@ resource "azapi_resource" "aca" {
                 }
             }
         }
-        template = {
+        emplate = {
             containers = [
-                {
-                    name = "web"
-                    image = "ngnix"
-                    resource = {
-                        cpu = 0.5
-                        memory = "1.0Gi "
-                    }
+              {
+                name = "web"
+                image = "ngnix"
+                resource = {
+                  cpu = 0.5
+                  memory = "1.0Gi "
                 }
+              }
             ]
             scale = {
                 minReplicas = 2
@@ -73,5 +73,6 @@ resource "azapi_resource" "aca" {
             }
         }
     })
- }
+}
+
 
