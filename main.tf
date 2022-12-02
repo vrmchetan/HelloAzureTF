@@ -47,33 +47,17 @@ resource "azapi_resource" "container_app" {
     location   = azurerm_resource_group.resourcegroups.location
     name       = "aca-test-environments"
 
-    body = jsonencode({
-        properties : {
-            managedEnvironmentId  = azapi_resource.aca_env.id
-            configuration = {
-                ingress = {
-                    external  = true
-                    targetPort = 80
-                }
-            }
-        }
-        template = {
-            containers = [
-              {
-                name = "web"
-                image = "ngnix"
-                resource = {
-                  cpu = 0.5
-                  memory = "1.0Gi "
-                }
-              }
-            ]
-            scale = {
-                minReplicas = 2
-                maxReplicas = 20
-            }
-        }
-    })
+  container {
+    name   = "hello-world"
+    image  = "mcr.microsoft.com/azuredocs/aci-helloworld:latest"
+    cpu    = "0.5"
+    memory = "1.5"
+
+    ports {
+      port     = 443
+      protocol = "TCP"
+    }
+  
 }
 
 
