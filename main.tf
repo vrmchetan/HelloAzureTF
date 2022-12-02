@@ -40,8 +40,8 @@ resource "azapi_resource" "aca_env" {
 
 
 #creating the aca
-resource "azapi_resource" "aca-test-environments" {
-    type       = "Microsoft.App/aca@2022-03-01"
+resource "azapi_resource" "aca" {
+    type       = "Microsoft.App/ContainerApps@2022-03-01"
     parent_id  = azurerm_resource_group.resourcegroups.id
     location   = azurerm_resource_group.resourcegroups.location
     name       = "aca-test-environments"
