@@ -56,7 +56,7 @@ resource "azapi_resource" "aca" {
                 }
             }
         }
-        emplate = {
+        template = {
             containers = [
               {
                 name = "web"
