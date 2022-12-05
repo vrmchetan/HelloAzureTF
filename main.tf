@@ -43,7 +43,7 @@ resource "azurerm_container_group" "example" {
   resource_group_name = azurerm_resource_group.example.name
   ip_address_type     = "Public"
   os_type             = "Linux"
-
+}
   container {
     name   = "hello-world"
     image  = "mcr.microsoft.com/azuredocs/aci-helloworld:latest"
