@@ -3,12 +3,12 @@ resource "azurerm_resource_group" "example" {
   location = "West Europe"
 }
 
-resource "azurerm_container_registry" "acr" {
-    name                = "containerRegistry1"
-  resource_group_name = azurerm_resource_group.example.name
+resource "azurerm_log_analytics_workspace" "example" {
+  name                = "terra-acctest-01"
   location            = azurerm_resource_group.example.location
-  sku                 = "Premium"
-  admin_enabled       = false
+  resource_group_name = azurerm_resource_group.example.name
+  sku                 = "PerGB2018"
+  retention_in_days   = 30
 }
 
 resource "azurerm_container_app_env" "example" {
@@ -17,6 +17,14 @@ resource "azurerm_container_app_env" "example" {
   resource_group_name    = azurerm_resource_group.example.name
   logs_workspace_id      = "logsworkspaceclientid"
   logs-workspace-key     = "logsworkspaceclientsecret"
+}
+
+resource "azurerm_container_registry" "acr" {
+    name                = "containerRegistry1"
+  resource_group_name = azurerm_resource_group.example.name
+  location            = azurerm_resource_group.example.location
+  sku                 = "Premium"
+  admin_enabled       = false
 }
 
 resource "azurerm_container_app" "example" {
@@ -29,13 +37,7 @@ resource "azurerm_container_app" "example" {
   query                  = "configuration.ingress.fqdn"
 }
 
-resource "azurerm_log_analytics_workspace" "example" {
-  name                = "terra-acctest-01"
-  location            = azurerm_resource_group.example.location
-  resource_group_name = azurerm_resource_group.example.name
-  sku                 = "PerGB2018"
-  retention_in_days   = 30
-}
+
 
 resource "azurerm_container_group" "example" {
   name                = "terra-acg"
@@ -43,7 +45,7 @@ resource "azurerm_container_group" "example" {
   resource_group_name = azurerm_resource_group.example.name
   ip_address_type     = "Public"
   os_type             = "Linux"
-}
+
   container {
     name   = "hello-world"
     image  = "mcr.microsoft.com/azuredocs/aci-helloworld:latest"
@@ -54,11 +56,15 @@ resource "azurerm_container_group" "example" {
       port     = 443
       protocol = "TCP"
     }
-   container {
+  }
+
+  container {
     name   = "sidecar"
     image  = "mcr.microsoft.com/azuredocs/aci-tutorial-sidecar"
     cpu    = "0.5"
     memory = "1.5"
   }
-}
-  
+
+  tags = {
+    environment = "testing"
+  }
