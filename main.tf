@@ -54,13 +54,11 @@ resource "azurerm_container_group" "example" {
       port     = 443
       protocol = "TCP"
     }
-  }
-
-  container {
+   container {
     name   = "sidecar"
     image  = "mcr.microsoft.com/azuredocs/aci-tutorial-sidecar"
     cpu    = "0.5"
     memory = "1.5"
   }
-
+}
   
