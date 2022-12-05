@@ -43,8 +43,8 @@ resource "azurerm_container_group" "example" {
 }
 resource "azurerm_container_registry" "acr" {
   name                = "containerRegistry543456"
-  resource_group_name = azurerm_resource_group.rg.name
-  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.acr.name
+  location            = azurerm_resource_group.acr.location
   sku                 = "Standard"
   admin_enabled       = true
  }
