@@ -63,6 +63,4 @@ resource "azurerm_container_group" "example" {
     memory = "1.5"
   }
 
-  tags = {
-    environment = "testing"
-  }
+  
