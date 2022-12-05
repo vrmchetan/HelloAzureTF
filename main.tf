@@ -3,10 +3,10 @@ resource "azurerm_resource_group" "example" {
   location = "West Europe"
 }
 
-resource "azurerm_container_group" "rg" {
+resource "azurerm_container_group" "example" {
   name                = "nitikumarsinghh"
-  location            = azurerm_resource_group.rg.location
-  resource_group_name = azurerm_resource_group.rg.name
+  location            = azurerm_resource_group.example.location
+  resource_group_name = azurerm_resource_group.example.name
   ip_address_type     = "Public"
   os_type             = "Linux"
 
