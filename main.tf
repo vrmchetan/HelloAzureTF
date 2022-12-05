@@ -3,10 +3,10 @@ resource "azurerm_resource_group" "example" {
   location = "West Europe"
 }
 
-resource "azurerm_container_group" "example" {
+resource "azurerm_container_group" "rg" {
   name                = "nitikumarsinghh"
-  location            = azurerm_resource_group.example.location
-  resource_group_name = azurerm_resource_group.example.name
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
   ip_address_type     = "Public"
   os_type             = "Linux"
 
@@ -32,4 +32,20 @@ resource "azurerm_container_group" "example" {
   tags = {
     environment = "testing"
   }
+  # Create a resource group
+  resource "azurerm_resource_group" "rg" {
+  name     = "rg"
+  location = "West Europe"
+  tags =  {
+  env = "dev"
+  cost = "TA102AXY"
+  }
+}
+resource "azurerm_container_registry" "acr" {
+  name                = "containerRegistry543456"
+  resource_group_name = azurerm_resource_group.rg.name
+  location            = azurerm_resource_group.rg.location
+  sku                 = "Standard"
+  admin_enabled       = true
+ }
 }
