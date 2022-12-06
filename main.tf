@@ -9,7 +9,7 @@ resource "azurerm_log_analytics_workspace" "law" {
     sku                 = "PerGB2018"
     retention_in_days   = 30
     }
-resource "azurerm_container_app_env" "cae" {
+resource "azurerm_container_app_env" "example" {
     name                   = "terra-containerapp-env"
     location               = azurerm_resource_group.rg.location
     resource_group_name    = azurerm_resource_group.rg.name
@@ -18,15 +18,15 @@ resource "azurerm_container_app_env" "cae" {
     }
 resource "azurerm_container_registry" "acr" {
     name                = "containerRegistry1"
-    resource_group_name = azurerm_resource_group.example.name
-    location            = azurerm_resource_group.example.location
+    resource_group_name = azurerm_resource_group.rg.name
+    location            = azurerm_resource_group.rg.location
     sku                 = "Premium"
     admin_enabled       = false
     }
 resource "azurerm_container_app" "aca" {
     name                   = "containerapp"
     resource_group_name    = azurerm_resource_group.rg.name
-    environment            = "azurerm_container_app_env.cae.environment"
+    environment            = "azurerm_container_app_env.example.environment"
     image                  = "mcr.microsoft.com/azuredocs/containerapps-helloworld:latest"
     target_port            = 80
     ingress                = "external"
