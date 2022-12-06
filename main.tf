@@ -1,20 +1,20 @@
-resource "azurerm_resource_group" "example" {
+resource "azurerm_resource_group" "rg" {
     name     = "terra-resource-001"
     location = "West Europe"
     }
-resource "azurerm_log_analytics_workspace" "example" {
+resource "azurerm_log_analytics_workspace" "law" {
     name                = "terra-acctest-01"
-    location            = azurerm_resource_group.example.location
-    resource_group_name = azurerm_resource_group.example.name
+    location            = azurerm_resource_group.rg.location
+    resource_group_name = azurerm_resource_group.rg.name
     sku                 = "PerGB2018"
     retention_in_days   = 30
     }
-resource "azurerm_container_app_env" "example" {
+resource "azurerm_container_app_env" "cae" {
     name                   = "terra-containerapp-env"
-    location               = azurerm_resource_group.example.location
-    resource_group_name    = azurerm_resource_group.example.name
-    logs_workspace_id      = "logsworkspaceclientid"
-    logs-workspace-key     = "logsworkspaceclientsecret"
+    location               = azurerm_resource_group.rg.location
+    resource_group_name    = azurerm_resource_group.rg.name
+    logs_workspace_id      = azurerm_log_analytics_workspace.law.id
+    logs-workspace-key     = azurerm_log_analytics_workspace.law.secret
     }
 resource "azurerm_container_registry" "acr" {
     name                = "containerRegistry1"
@@ -23,19 +23,19 @@ resource "azurerm_container_registry" "acr" {
     sku                 = "Premium"
     admin_enabled       = false
     }
-resource "azurerm_container_app" "example" {
+resource "azurerm_container_app" "aca" {
     name                   = "containerapp"
-    resource_group_name    = "resourcegroupname"
-    environment            = "azurerm_container_app_env.example.environment"
+    resource_group_name    = azurerm_resource_group.rg.name
+    environment            = "azurerm_container_app_env.cae.environment"
     image                  = "mcr.microsoft.com/azuredocs/containerapps-helloworld:latest"
     target_port            = 80
     ingress                = "external"
     query                  = "configuration.ingress.fqdn"
     }
-resource "azurerm_container_group" "example" {
+resource "azurerm_container_group" "acg" {
     name                = "terra-acg"
-    location            = azurerm_resource_group.example.location
-    resource_group_name = azurerm_resource_group.example.name
+    location            = azurerm_resource_group.rg.location
+    resource_group_name = azurerm_resource_group.rg.name
     ip_address_type     = "Public"
     os_type             = "Linux"
 
