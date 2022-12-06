@@ -9,13 +9,7 @@ resource "azurerm_log_analytics_workspace" "example" {
     sku                 = "PerGB2018"
     retention_in_days   = 30
     }
-resource "azurerm_container_app_env" "example" {
-    name                   = "terra-containerapp-env"
-    location               = azurerm_resource_group.example.location
-    resource_group_name    = azurerm_resource_group.example.name
-    logs_workspace_id      = azurerm_log_analytics_workspace.example.id
-    logs-workspace-key     = azurerm_log_analytics_workspace.example.secret
-    }
+
 resource "azurerm_container_registry" "example" {
     name                = "containerRegistry1"
     resource_group_name = azurerm_resource_group.example.name
@@ -23,15 +17,7 @@ resource "azurerm_container_registry" "example" {
     sku                 = "Premium"
     admin_enabled       = false
     }
-resource "azurerm_container_app" "example" {
-    name                   = "containerapp"
-    resource_group_name    = azurerm_resource_group.example.name
-    environment            = "azurerm_container_app_env.example.environment"
-    image                  = "mcr.microsoft.com/azuredocs/containerapps-helloworld:latest"
-    target_port            = 80
-    ingress                = "external"
-    query                  = "configuration.ingress.fqdn"
-    }
+
 resource "azurerm_container_group" "example" {
   name                = "example-continst"
   location            = azurerm_resource_group.example.location
