@@ -79,3 +79,8 @@ jobs:
     - name: Terraform apply
       run: terraform apply --auto-approve
   #    working-directory: ${{env.ROOT_PATH}}
+
+
+ # terraform import
+    - name: Terraform Import
+      run: terraform import azurerm_resource_group.example /subscriptions/10962468-ab34-4e5b-9202-b1d63cf1d6ae/resourceGroups/terra-resource-001
