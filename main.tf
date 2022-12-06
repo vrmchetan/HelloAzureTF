@@ -1,41 +1,41 @@
-resource "azurerm_resource_group" "rg" {
+resource "azurerm_resource_group" "example" {
     name     = "terra-resource-001"
     location = "West Europe"
     }
-resource "azurerm_log_analytics_workspace" "law" {
+resource "azurerm_log_analytics_workspace" "example" {
     name                = "terra-acctest-01"
-    location            = azurerm_resource_group.rg.location
-    resource_group_name = azurerm_resource_group.rg.name
+    location            = azurerm_resource_group.example.location
+    resource_group_name = azurerm_resource_group.example.name
     sku                 = "PerGB2018"
     retention_in_days   = 30
     }
 resource "azurerm_container_app_env" "example" {
     name                   = "terra-containerapp-env"
-    location               = azurerm_resource_group.rg.location
-    resource_group_name    = azurerm_resource_group.rg.name
-    logs_workspace_id      = azurerm_log_analytics_workspace.law.id
-    logs-workspace-key     = azurerm_log_analytics_workspace.law.secret
+    location               = azurerm_resource_group.example.location
+    resource_group_name    = azurerm_resource_group.example.name
+    logs_workspace_id      = azurerm_log_analytics_workspace.example.id
+    logs-workspace-key     = azurerm_log_analytics_workspace.example.secret
     }
-resource "azurerm_container_registry" "acr" {
+resource "azurerm_container_registry" "example" {
     name                = "containerRegistry1"
-    resource_group_name = azurerm_resource_group.rg.name
-    location            = azurerm_resource_group.rg.location
+    resource_group_name = azurerm_resource_group.example.name
+    location            = azurerm_resource_group.example.location
     sku                 = "Premium"
     admin_enabled       = false
     }
-resource "azurerm_container_app" "aca" {
+resource "azurerm_container_app" "example" {
     name                   = "containerapp"
-    resource_group_name    = azurerm_resource_group.rg.name
+    resource_group_name    = azurerm_resource_group.example.name
     environment            = "azurerm_container_app_env.example.environment"
     image                  = "mcr.microsoft.com/azuredocs/containerapps-helloworld:latest"
     target_port            = 80
     ingress                = "external"
     query                  = "configuration.ingress.fqdn"
     }
-resource "azurerm_container_group" "acg" {
+resource "azurerm_container_group" "example" {
     name                = "terra-acg"
-    location            = azurerm_resource_group.rg.location
-    resource_group_name = azurerm_resource_group.rg.name
+    location            = azurerm_resource_group.example.location
+    resource_group_name = azurerm_resource_group.example.name
     ip_address_type     = "Public"
     os_type             = "Linux"
 
