@@ -1,7 +1,4 @@
-resource "azurerm_resource_group" "example" {
-    name     = "terra-resource-001"
-    location = "West Europe"
-    }
+
 resource "azurerm_log_analytics_workspace" "example" {
     name                = "terra-acctest-01"
     location            = azurerm_resource_group.example.location
