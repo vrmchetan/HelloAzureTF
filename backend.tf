@@ -19,3 +19,4 @@ resource "azurerm_resource_group" "example" {
     name     = "terra-resource-001"
     location = "West Europe"
     }
+#jhvakyulugdpo
