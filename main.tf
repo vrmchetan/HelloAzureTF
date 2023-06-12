@@ -46,5 +46,3 @@ resource "azurerm_container_group" "example" {
     environment = "testing"
   }
 }
-
-#
